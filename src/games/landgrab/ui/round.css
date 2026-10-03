@@ -1,0 +1,124 @@
+.lg-round {
+  position: absolute;
+  top: calc(var(--lg-safe-top) + 5.8rem);
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  animation: lg-fade-in 0.3s ease-out both;
+}
+
+.lg-round.is-big {
+  inset: 0;
+  top: 0;
+  left: 0;
+  transform: none;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at center, rgba(20, 10, 60, 0.35), rgba(5, 2, 20, 0.75));
+}
+
+/* Behind the results the small banner would only repeat the Play Again countdown. */
+.lg-results ~ .lg-round:not(.is-big) {
+  display: none;
+}
+
+.lg-round__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.55rem 1.4rem 0.7rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, #43339a, #2c2170);
+  border: 0.18rem solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 0.35rem 0 rgba(10, 5, 35, 0.6), 0 0.8rem 1.6rem rgba(0, 0, 0, 0.45);
+  text-align: center;
+  animation: lg-pop-in 0.45s var(--ease-spring) both;
+}
+
+.lg-round.is-big .lg-round__card {
+  padding: 1.4rem 2.2rem 1.5rem;
+  border-color: var(--winner);
+  box-shadow: 0 0.45rem 0 rgba(10, 5, 35, 0.6), 0 0 2.4rem 0.4rem color-mix(in srgb, var(--winner) 60%, transparent);
+}
+
+.lg-round__crown {
+  font-size: 1.6rem;
+  color: var(--gold);
+  filter: drop-shadow(0 0.14rem 0 var(--gold-edge));
+}
+
+.lg-round.is-big .lg-round__crown {
+  font-size: 3.4rem;
+  animation: lg-crown-bob 1.2s ease-in-out infinite;
+}
+
+.lg-round__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-shadow: var(--lg-drop);
+}
+
+.lg-round.is-big .lg-round__title {
+  font-size: clamp(1.8rem, 7vmin, 3rem);
+}
+
+.lg-round.is-me.is-big .lg-round__title {
+  color: var(--gold-top);
+  -webkit-text-stroke: 0.05em #8a4a00;
+  paint-order: stroke fill;
+}
+
+.lg-round__next {
+  color: var(--lg-ink-2);
+  font-size: 0.95rem;
+}
+
+.lg-round__next strong {
+  display: inline-block;
+  min-width: 1ch;
+  color: #fff;
+  font-size: 1.2em;
+  animation: lg-pop-in 0.35s var(--ease-spring);
+}
+
+.lg-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.lg-confetti__piece {
+  position: absolute;
+  top: -1rem;
+  width: 0.55rem;
+  height: 0.9rem;
+  border-radius: 0.15rem;
+  animation-name: lg-confetti-fall;
+  animation-timing-function: cubic-bezier(0.3, 0.2, 0.6, 1);
+  animation-fill-mode: both;
+}
+
+.lg-confetti__piece.is-wide {
+  width: 0.9rem;
+  height: 0.5rem;
+}
+
+@keyframes lg-confetti-fall {
+  from {
+    transform: translate(0, 0) rotate(0);
+  }
+  to {
+    transform: translate(var(--drift), 110vh) rotate(var(--spin));
+  }
+}
+
+@keyframes lg-crown-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-0.4rem) rotate(4deg);
+  }
+}

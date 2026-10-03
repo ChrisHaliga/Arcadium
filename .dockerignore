@@ -1,0 +1,17 @@
+# The image only needs package*.json, tsconfig.json, server/ and src/.
+.git
+node_modules
+dist
+dist-server
+dist-electron
+desktop
+ios
+android
+e2e
+docs
+test-results
+playwright-report
+*.log
+.DS_Store
+Dockerfile
+.dockerignore

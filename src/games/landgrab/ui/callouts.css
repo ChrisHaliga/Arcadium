@@ -1,0 +1,182 @@
+/*
+ * Callouts stack upward from just over the pending-coins bubble: the head, its name and
+ * what the loop is worth are what the player watches, so nothing lands on them. A newer
+ * callout takes the spot nearest the head and the one it pushes up steps back.
+ */
+.lg-callouts {
+  position: absolute;
+  /* The bubble's offset, its height and a little air. */
+  bottom: calc(50% + var(--lg-over-head) + 2.6rem);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 1rem;
+}
+
+/* The out animations end just as GameUi drops the callout (CALLOUT_MS, ROLL_CALLOUT_MS in store.ts). */
+.lg-callout {
+  --tint: #ffd21f;
+  --tint-edge: #8a3a00;
+  --callout-scale: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  font-size: calc(1rem * var(--callout-scale));
+  text-align: center;
+  transition: font-size 0.2s var(--ease-out);
+  animation: lg-callout-in 0.5s var(--ease-spring) both, lg-callout-out 0.35s 1.55s ease-in forwards;
+}
+
+.lg-callout:not(:last-child) {
+  --callout-scale: 0.72;
+}
+
+/* Too short to stack over the head: side by side instead, a little smaller. */
+@media (max-height: 520px) {
+  .lg-callouts {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .lg-callout,
+  .lg-callout:not(:last-child) {
+    --callout-scale: 0.82;
+  }
+}
+
+.lg-callout--feat {
+  animation: lg-callout-in 0.5s var(--ease-spring) both, lg-callout-out 0.35s 2.25s ease-in forwards;
+}
+
+.lg-callout--milestone {
+  --tint: #42e3ff;
+  --tint-edge: #0b4a8a;
+}
+
+.lg-callout--treasure {
+  --tint: #ffcc33;
+  --tint-edge: #8a4a00;
+}
+
+.lg-callout--win {
+  --tint: #ffe680;
+  --tint-edge: #9a5200;
+}
+
+.lg-callout__title {
+  font-size: clamp(2.1em, calc(8vmin * var(--callout-scale)), 3.4em);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--tint);
+  letter-spacing: 0.01em;
+  -webkit-text-stroke: 0.06em var(--tint-edge);
+  paint-order: stroke fill;
+  text-shadow: 0 0.2rem 0 var(--tint-edge), 0 0.45rem 0.9rem rgba(6, 3, 24, 0.5);
+  transition: font-size 0.2s var(--ease-out);
+}
+
+.lg-callout__detail {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0.12rem 0 rgba(15, 8, 45, 0.7), 0 0 0.6rem rgba(15, 8, 45, 0.5);
+}
+
+.lg-callout__reward {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 2.3em;
+  margin-top: 0.2em;
+}
+
+.lg-callout__coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.12em 0.6em 0.12em 0.25em;
+  border-radius: 999px;
+  background: rgba(15, 10, 40, 0.75);
+  color: var(--lg-coin);
+  font-size: 1.3em;
+  font-weight: 700;
+  animation: lg-pop-in 0.35s var(--ease-spring) both;
+}
+
+.lg-roll {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.25em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.6em;
+  background: linear-gradient(180deg, var(--purple-top), var(--purple) 60%);
+  box-shadow: 0 0.24rem 0 var(--purple-edge), 0 0.4rem 0.9rem rgba(6, 3, 24, 0.4);
+  font-size: 1.5em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0.1rem 0 var(--purple-edge);
+}
+
+.lg-roll.is-landed {
+  animation: lg-roll-land 0.45s var(--ease-spring);
+}
+
+.lg-roll.is-hot {
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.24rem 0 var(--gold-edge), 0 0 1.4rem 0.3rem rgba(255, 210, 31, 0.75);
+  color: #6b3900;
+  text-shadow: 0 0.1rem 0 rgba(255, 245, 200, 0.6);
+}
+
+/* A kill: a quick white pop and a hot vignette. */
+.lg-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 59, 92, 0.5) 100%);
+  animation: lg-flash 0.5s ease-out forwards;
+}
+
+@keyframes lg-callout-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-6deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) rotate(2deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes lg-callout-out {
+  to {
+    opacity: 0;
+    transform: translateY(-1.5rem) scale(0.9);
+  }
+}
+
+@keyframes lg-roll-land {
+  0% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes lg-flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

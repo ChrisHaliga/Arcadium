@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <title>Landgrab render harness</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #1b1440; overflow: hidden; }
+      #stage { position: fixed; inset: 0; }
+      #game { width: 100%; height: 100%; display: block; }
+      .hud { position: fixed; font: 600 15px Fredoka, system-ui, sans-serif; color: #fff; pointer-events: none;
+             text-shadow: 0 2px 0 rgba(27, 20, 64, 0.6); }
+      #coins { top: 14px; left: 14px; padding: 6px 12px 6px 34px; border-radius: 999px; background: rgba(27, 20, 64, 0.55); }
+      #coins::before { content: ''; position: absolute; left: 8px; top: 7px; width: 18px; height: 18px; border-radius: 50%;
+                       background: radial-gradient(circle at 35% 30%, #fff4c2, #ffcc33 55%, #d99a00); }
+      #minimap { top: 12px; right: 12px; width: 110px; height: 110px; border-radius: 50%;
+                 background: rgba(27, 20, 64, 0.45); box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }
+      #perf { bottom: 8px; left: 10px; font-size: 11px; opacity: 0.75; }
+    </style>
+  </head>
+  <body>
+    <div id="stage"><canvas id="game"></canvas></div>
+    <div id="coins" class="hud">0</div>
+    <canvas id="minimap" class="hud" width="220" height="220"></canvas>
+    <div id="perf" class="hud"></div>
+    <script type="module" src="./landgrab.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+.coin-amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,40 @@
+/* Keyframes the kit animates with, and the counter bump, free for any screen to reuse by name. */
+
+/* Breathing scale for anything that wants to be tapped. Uses `scale` so it composes with press transforms. */
+@keyframes breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.045;
+  }
+}
+
+/* A gloss band sweeping across, then resting off to the side until the next pass. */
+@keyframes shine-sweep {
+  0%,
+  65% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-20deg);
+  }
+}
+
+/* A quick swell for a number that just changed; replay it by adding the class again. */
+.is-bumping {
+  animation: bump 0.22s var(--ease-out);
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.16);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

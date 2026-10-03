@@ -1,0 +1,23 @@
+{
+  "name": "arcadium-desktop",
+  "productName": "Arcadium",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Arcadium desktop app for Steam (Electron wrapper around the web build)",
+  "author": "Arcadium",
+  "main": "main.cjs",
+  "scripts": {
+    "dev": "electron . --dev",
+    "copy-web": "node copy-web.cjs",
+    "build:web": "npm --prefix .. run build && node copy-web.cjs",
+    "start": "npm run build:web && electron .",
+    "pack": "npm run build:web && electron-builder",
+    "pack:win": "npm run build:web && electron-builder --win",
+    "pack:mac": "npm run build:web && electron-builder --mac",
+    "pack:linux": "npm run build:web && electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  }
+}

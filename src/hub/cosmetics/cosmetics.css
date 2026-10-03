@@ -1,0 +1,249 @@
+/* Rarity theming: any element with .rarity--X gets --r (main) and --r-deep (shadow) colours. */
+.rarity--common {
+  --r: var(--common);
+  --r-deep: var(--common-deep);
+}
+
+.rarity--rare {
+  --r: var(--rare);
+  --r-deep: var(--rare-deep);
+}
+
+.rarity--epic {
+  --r: var(--epic);
+  --r-deep: var(--epic-deep);
+}
+
+.rarity--legendary {
+  --r: var(--legendary);
+  --r-deep: var(--legendary-deep);
+}
+
+.item-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.55rem 0.55rem 0.65rem;
+  border: 0.22rem solid var(--r);
+  border-radius: 1.3rem;
+  background: radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 60%),
+    linear-gradient(180deg, var(--r-deep), #1c1450 85%);
+  box-shadow: 0 0.3rem 0 rgba(8, 4, 30, 0.6), 0 0.6rem 1.2rem rgba(0, 0, 0, 0.35),
+    inset 0 0.12rem 0 rgba(255, 255, 255, 0.25);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.18s var(--ease-spring), box-shadow 0.2s;
+}
+
+button.item-card {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  button.item-card:hover {
+    transform: translateY(-0.2rem) scale(1.02);
+  }
+}
+
+button.item-card:active {
+  transform: translateY(0.15rem) scale(0.98);
+}
+
+/* Legendary items get a slow shine across the whole card. */
+.rarity--legendary.item-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 246, 200, 0.35), transparent);
+  animation: shine-sweep 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.item-card__rarity {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 0.12rem 0.7rem 0.2rem;
+  border-radius: 0 0 0.7rem 0.7rem;
+  background: var(--r);
+  color: #1b1440;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* A tilted sticker on the art's corner: "New", "Owned", "Equipped". */
+.item-card__tag {
+  position: absolute;
+  top: 1.15rem;
+  right: 0.3rem;
+  z-index: 2;
+  padding: 0.14rem 0.45rem;
+  border-radius: 0.5rem;
+  border: 0.12rem solid #fff;
+  background: var(--green);
+  box-shadow: 0 0.14rem 0 var(--green-edge), 0 0.2rem 0.4rem rgba(0, 0, 0, 0.3);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform: rotate(8deg);
+  animation: pop-in 0.4s var(--ease-spring) both;
+}
+
+.item-card--l .item-card__tag {
+  top: 1.5rem;
+  right: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.item-card__art {
+  position: relative;
+  display: block;
+  margin-top: 0.9rem;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  box-shadow: 0 0 0 0.16rem rgba(255, 255, 255, 0.12), 0 0.2rem 0.6rem rgba(0, 0, 0, 0.35);
+  aspect-ratio: 1;
+}
+
+.cosmetic-preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cosmetic-preview--swatch {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 35%, var(--c-light), var(--c) 55%, var(--c-dark) 120%);
+  color: #fff;
+}
+
+.cosmetic-preview--swatch .icon {
+  width: 46%;
+  height: 46%;
+  filter: drop-shadow(0 0.15rem 0 rgba(0, 0, 0, 0.25));
+}
+
+.item-card.is-locked .cosmetic-preview {
+  filter: grayscale(0.6) brightness(0.72);
+}
+
+.item-card__lock {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0.15rem 0.2rem rgba(0, 0, 0, 0.6));
+}
+
+.item-card__name {
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0.1rem 0 rgba(0, 0, 0, 0.4);
+}
+
+.item-card__kind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.item-card__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.4rem;
+}
+
+.item-card.is-active {
+  box-shadow: 0 0 0 0.22rem #fff, 0 0 1.4rem var(--r), 0 0.6rem 1.2rem rgba(0, 0, 0, 0.35);
+}
+
+.item-card--s {
+  padding: 0.4rem 0.4rem 0.5rem;
+  border-radius: 1.05rem;
+}
+
+.item-card--s .item-card__name {
+  font-size: 0.82rem;
+}
+
+.item-card--s .item-card__kind {
+  display: none;
+}
+
+.item-card--l {
+  width: min(16rem, 70vw);
+  padding: 0.8rem 0.8rem 1rem;
+  border-width: 0.3rem;
+  border-radius: 1.8rem;
+}
+
+.item-card--l .item-card__name {
+  font-size: 1.5rem;
+}
+
+.item-card--l .item-card__kind {
+  font-size: 0.9rem;
+}
+
+.item-card--l .item-card__rarity {
+  font-size: 0.85rem;
+}
+
+/* Price tag inside a card: looks like a gold button but the whole card is the control. */
+.price-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  min-width: 70%;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.8rem;
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.22rem 0 var(--gold-edge), inset 0 0.1rem 0 rgba(255, 255, 255, 0.5);
+  color: #6b3900;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.price-tag--short {
+  background: linear-gradient(180deg, #ffb3ba, #ff6b78 60%);
+  box-shadow: 0 0.22rem 0 var(--red-edge), inset 0 0.1rem 0 rgba(255, 255, 255, 0.5);
+  color: #5a0010;
+}
+
+.owned-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.8rem;
+  background: rgba(63, 212, 107, 0.2);
+  color: #8af7a6;
+  font-size: 0.9rem;
+  font-weight: 700;
+}

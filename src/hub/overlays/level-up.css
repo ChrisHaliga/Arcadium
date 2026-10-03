@@ -1,0 +1,122 @@
+.level-up {
+  position: fixed;
+  inset: 0;
+  z-index: 58;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--safe-top) + var(--topbar-h) + 0.5rem) 1rem calc(var(--safe-bottom) + 1rem);
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, rgba(70, 40, 160, 0.92), rgba(8, 4, 28, 0.94) 70%);
+  animation: fade-in 0.3s ease-out both;
+}
+
+.level-up__rays {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 160vmax;
+  height: 160vmax;
+  margin: -80vmax 0 0 -80vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 213, 74, 0.35) 0deg 8deg, transparent 8deg 22deg);
+  mask-image: radial-gradient(circle, #000 0%, transparent 42%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 42%);
+  animation: spin 18s linear infinite;
+  pointer-events: none;
+}
+
+.level-up__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.level-up__title {
+  font-size: clamp(2.4rem, 9vmin, 4rem);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0.25rem 0 var(--gold-edge), 0 0 1.5rem rgba(255, 197, 49, 0.6);
+  animation: pop-in 0.6s var(--ease-spring) both;
+}
+
+.level-up__badge {
+  position: relative;
+  width: clamp(7rem, 26vmin, 10rem);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  animation: badge-in 0.8s 0.15s var(--ease-spring) both;
+}
+
+.level-up__star {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ffe680, #ffb21f 60%, #f08a00);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 0.4rem 0 #b86f00);
+  animation: spin 10s linear infinite;
+}
+
+.level-up__number {
+  position: relative;
+  font-size: clamp(2.2rem, 8vmin, 3.2rem);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0.2rem 0 #b86f00, 0 0 0.6rem rgba(120, 60, 0, 0.6);
+}
+
+.level-up__rewards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  animation: rise-in 0.5s 0.45s var(--ease-out) both;
+}
+
+.level-up__reward {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background: rgba(8, 4, 30, 0.55);
+  border: 0.14rem solid rgba(255, 255, 255, 0.14);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffe27a;
+}
+
+.level-up__chest {
+  font-size: 0.7rem;
+}
+
+.level-up__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.7rem;
+  animation: rise-in 0.5s 0.6s var(--ease-out) both;
+}
+
+@keyframes badge-in {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.15) rotate(10deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@media (max-height: 500px) {
+  .level-up__content {
+    gap: 0.5rem;
+  }
+}

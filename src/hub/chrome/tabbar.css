@@ -1,0 +1,103 @@
+.tabbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  width: min(calc(100% - 1.25rem - var(--safe-left) - var(--safe-right)), 34rem);
+  margin: 0 auto calc(var(--safe-bottom) + 0.6rem);
+  padding: 0.3rem;
+  border-radius: 1.6rem;
+  background: linear-gradient(180deg, rgba(58, 44, 133, 0.92), rgba(30, 22, 78, 0.95));
+  border: 0.16rem solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0.35rem 0 rgba(8, 4, 30, 0.6), 0 0.8rem 1.6rem rgba(0, 0, 0, 0.4), inset 0 0.14rem 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: rise-in 0.5s 0.05s var(--ease-out) both;
+}
+
+.tabbar__tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.35rem 0 0.3rem;
+  border: 0;
+  border-radius: 1.25rem;
+  background: none;
+  color: var(--ink-3);
+  transition: color 0.2s;
+}
+
+.tabbar__bubble {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.2rem;
+  border-radius: 0.9rem;
+  transition: transform 0.35s var(--ease-spring), background 0.2s, box-shadow 0.2s;
+}
+
+.tabbar__icon {
+  font-size: 1.45rem;
+}
+
+.tabbar__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tabbar__tab.is-active {
+  color: #fff;
+}
+
+.tabbar__tab.is-active .tabbar__bubble {
+  transform: translateY(-0.55rem) scale(1.12);
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.25rem 0 var(--gold-edge), 0 0.5rem 1rem rgba(255, 197, 49, 0.35);
+  color: #6b3900;
+}
+
+.tabbar__tab.is-active .tabbar__label {
+  font-weight: 700;
+  transform: translateY(-0.2rem);
+}
+
+@media (hover: hover) {
+  .tabbar__tab:not(.is-active):hover {
+    color: var(--ink-2);
+  }
+
+  .tabbar__tab:not(.is-active):hover .tabbar__bubble {
+    transform: translateY(-0.15rem);
+  }
+}
+
+@media (max-height: 500px) {
+  .tabbar {
+    margin-bottom: calc(var(--safe-bottom) + 0.35rem);
+    padding: 0.15rem 0.3rem;
+  }
+
+  .tabbar__tab {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0;
+  }
+
+  .tabbar__bubble {
+    width: 2.3rem;
+    height: 1.9rem;
+  }
+
+  .tabbar__tab.is-active .tabbar__bubble {
+    transform: scale(1.08);
+  }
+
+  .tabbar__tab.is-active .tabbar__label {
+    transform: none;
+  }
+}

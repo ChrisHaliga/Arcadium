@@ -1,0 +1,349 @@
+/* ---------- Full-screen states: connecting, servers down, connection lost ---------- */
+
+.lg-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: calc(var(--lg-safe-top) + 1.5rem) calc(var(--lg-safe-right) + 1.5rem) calc(var(--lg-safe-bottom) + 1.5rem) calc(var(--lg-safe-left) + 1.5rem);
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(27, 20, 64, 0.72), rgba(8, 4, 28, 0.92));
+  pointer-events: auto;
+  animation: lg-fade-in 0.3s ease-out both;
+}
+
+.lg-screen--solid {
+  background: radial-gradient(120% 90% at 50% 0%, #2f2380 0%, var(--lg-night) 55%, var(--lg-night-deep) 100%);
+}
+
+.lg-screen__logo {
+  margin: 0;
+  font-size: clamp(2.6rem, 11vmin, 4.6rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #1fd6a0;
+  -webkit-text-stroke: 0.05em #0b5a44;
+  paint-order: stroke fill;
+  text-shadow: 0 0.3rem 0 #0b5a44, 0 0.8rem 1.6rem rgba(0, 0, 0, 0.4);
+  animation: lg-pop-in 0.5s var(--ease-spring) both;
+}
+
+.lg-screen__title {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-shadow: var(--lg-drop);
+}
+
+.lg-screen__text {
+  max-width: 22rem;
+  margin: 0;
+  color: var(--lg-ink-2);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.lg-screen__badge {
+  display: grid;
+  place-items: center;
+  width: 4.6rem;
+  height: 4.6rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--pink-top), var(--pink) 60%);
+  box-shadow: 0 0.35rem 0 var(--pink-edge), 0 0.8rem 1.6rem rgba(0, 0, 0, 0.35);
+  font-size: 2.3rem;
+  animation: lg-pop-in 0.5s var(--ease-spring) both;
+}
+
+.lg-screen__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.4rem;
+}
+
+/* Three blobs in player colours bouncing in turn. */
+.lg-loader {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem 0 0.4rem;
+}
+
+.lg-loader__blob {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 38%;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.45), transparent 55%), var(--blob);
+  box-shadow: 0 0.22rem 0 var(--blob-edge);
+  animation: lg-blob-hop 0.9s ease-in-out infinite;
+}
+
+.lg-loader__blob:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.lg-loader__blob:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ---------- Pause menu ---------- */
+
+.lg-pause-menu {
+  gap: 0.85rem;
+}
+
+.lg-pause-menu__note {
+  margin: 0;
+  color: var(--lg-ink-2);
+  font-size: 0.95rem;
+}
+
+.lg-pause-menu__bank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: -0.3rem 0 0;
+  color: var(--lg-ink-3);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.lg-toggles {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.lg-toggle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.7rem 0.4rem 0.6rem;
+  border: 0.15rem solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(10, 5, 35, 0.4);
+  pointer-events: auto;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lg-toggle.is-on {
+  background: rgba(63, 212, 107, 0.18);
+  border-color: rgba(63, 212, 107, 0.6);
+}
+
+.lg-toggle__icon {
+  font-size: 1.5rem;
+  color: var(--lg-ink-3);
+}
+
+.lg-toggle.is-on .lg-toggle__icon {
+  color: var(--green-top);
+}
+
+.lg-toggle__label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.lg-toggle__state {
+  font-size: 0.75rem;
+  color: var(--lg-ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Second chance ---------- */
+
+.lg-chance {
+  max-width: 23.5rem;
+  gap: 0.6rem;
+}
+
+.lg-ring {
+  position: relative;
+  width: 7.2rem;
+  height: 7.2rem;
+  margin-top: 0.3rem;
+}
+
+.lg-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.lg-ring__track {
+  fill: rgba(10, 5, 35, 0.55);
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 9;
+}
+
+.lg-ring__fill {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 9;
+  stroke-linecap: round;
+  animation-name: lg-ring-drain;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  transition: stroke 0.3s;
+}
+
+.lg-ring.is-urgent .lg-ring__fill {
+  stroke: var(--pink);
+}
+
+/* An offline pause holds the revive window, so the ring holds too. */
+.lg-chance.is-frozen .lg-ring__fill {
+  animation-play-state: paused;
+}
+
+.lg-ring__seconds {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: var(--lg-drop);
+  animation: lg-tick 0.4s var(--ease-spring);
+}
+
+.lg-chance__keep {
+  margin: 0;
+  color: var(--lg-ink-2);
+  font-size: 1.05rem;
+}
+
+.lg-chance__keep strong {
+  color: #fff;
+}
+
+.lg-chance__revive {
+  margin-top: 0.3rem;
+}
+
+.lg-chance__heart {
+  color: #ff3b5c;
+  filter: drop-shadow(0 0.08rem 0 rgba(255, 255, 255, 0.6));
+}
+
+.lg-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-left: 0.3rem;
+  padding: 0.1rem 0.55rem 0.1rem 0.25rem;
+  border-radius: 999px;
+  background: rgba(107, 57, 0, 0.18);
+  font-size: 0.9em;
+}
+
+.lg-chance__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  color: var(--lg-ink-3);
+  font-size: 0.88rem;
+}
+
+.lg-chance__note--short {
+  color: #ffb3c8;
+  font-weight: 700;
+}
+
+/* ---------- Short screens (landscape phones): tighter, actions side by side ---------- */
+
+@media (max-height: 460px) {
+  .lg-screen {
+    gap: 0.6rem;
+  }
+
+  .lg-screen__badge {
+    width: 3.4rem;
+    height: 3.4rem;
+    font-size: 1.7rem;
+  }
+
+  .lg-screen__title {
+    font-size: 1.5rem;
+  }
+
+  .lg-screen__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .lg-loader {
+    padding-top: 0.6rem;
+  }
+
+  .lg-panel {
+    padding-top: 1.7rem;
+  }
+
+  .lg-chance,
+  .lg-pause-menu {
+    gap: 0.45rem;
+  }
+
+  .lg-ring {
+    width: 5.6rem;
+    height: 5.6rem;
+    margin-top: 0;
+  }
+
+  .lg-ring__seconds {
+    font-size: 2.4rem;
+  }
+
+  .lg-toggle {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .lg-toggle__icon {
+    font-size: 1.25rem;
+  }
+}
+
+@keyframes lg-blob-hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  30% {
+    transform: translateY(0) scale(1.15, 0.85);
+  }
+  55% {
+    transform: translateY(-1rem) scale(0.92, 1.08);
+  }
+}
+
+@keyframes lg-ring-drain {
+  from {
+    stroke-dashoffset: var(--ring-from);
+  }
+  to {
+    stroke-dashoffset: var(--ring-to);
+  }
+}
+
+@keyframes lg-tick {
+  from {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+}

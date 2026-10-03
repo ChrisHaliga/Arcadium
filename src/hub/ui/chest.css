@@ -1,0 +1,118 @@
+.chest {
+  --wood-top: #f0a457;
+  --wood: #c9732e;
+  --wood-edge: #8a4716;
+  --band: #d7e0ec;
+  --band-edge: #8b98ab;
+  --lock: #d7e0ec;
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  height: 3.7em;
+  filter: drop-shadow(0 0.25em 0.25em rgba(5, 2, 20, 0.45));
+}
+
+.chest--big {
+  --wood-top: #c49bff;
+  --wood: #8f5bff;
+  --wood-edge: #5a2bc0;
+  --band: #ffd54a;
+  --band-edge: #c47f00;
+  --lock: #ffd54a;
+}
+
+.chest--legendary {
+  --wood-top: #ffe680;
+  --wood: #ffb81f;
+  --wood-edge: #b86f00;
+  --band: #fff6cf;
+  --band-edge: #d79a1a;
+  --lock: #ff4f9a;
+}
+
+.chest__lid,
+.chest__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--wood-top), var(--wood) 70%);
+  box-shadow: inset 0 -0.18em 0 var(--wood-edge), inset 0 0.1em 0 rgba(255, 255, 255, 0.45);
+}
+
+.chest__lid {
+  top: 0;
+  height: 1.6em;
+  border-radius: 1.4em 1.4em 0.25em 0.25em;
+  z-index: 2;
+  transform-origin: 10% 100%;
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.chest__body {
+  bottom: 0;
+  height: 2.2em;
+  border-radius: 0.25em 0.25em 0.6em 0.6em;
+}
+
+/* Planks. */
+.chest__body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 0.62em, rgba(0, 0, 0, 0.12) 0.62em 0.7em);
+}
+
+.chest__band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0.9em;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--band-edge), var(--band) 30% 70%, var(--band-edge));
+}
+
+.chest__lid .chest__band {
+  box-shadow: -1.35em 0 0 -0.25em var(--band-edge), 1.35em 0 0 -0.25em var(--band-edge);
+}
+
+.chest__lock {
+  position: absolute;
+  top: 0.15em;
+  left: 50%;
+  width: 1.15em;
+  height: 1.25em;
+  transform: translateX(-50%);
+  border-radius: 0.3em 0.3em 0.5em 0.5em;
+  background: linear-gradient(180deg, #fff, var(--lock) 45%);
+  box-shadow: 0 0.12em 0 var(--band-edge), 0 0 0 0.08em rgba(0, 0, 0, 0.25);
+}
+
+.chest__lock::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0.35em;
+  width: 0.24em;
+  height: 0.5em;
+  transform: translateX(-50%);
+  border-radius: 0.12em;
+  background: rgba(30, 15, 60, 0.75);
+}
+
+.chest--legendary .chest__lock {
+  border-radius: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  background: radial-gradient(circle at 35% 30%, #fff 0 12%, #ff8cc8 13% 40%, var(--lock) 41%);
+  box-shadow: 0 0 0 0.14em var(--band), 0 0 0.6em #ff4f9a;
+}
+
+.chest--legendary .chest__lock::after {
+  display: none;
+}
+
+.chest.is-open .chest__lid {
+  transform: translateY(-0.9em) rotate(-28deg);
+}

@@ -1,0 +1,116 @@
+/* A feat's bonus spin: a round window of faces beside the feat's name and what it landed on. Sized by --face, set by the results layout. */
+.lg-spin {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #5a3fc4, #3a2a8f);
+  box-shadow: 0 0.3rem 0 #24196a, inset 0 0.14rem 0 rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s;
+}
+
+.lg-spin.is-paying {
+  box-shadow: 0 0.3rem 0 #24196a, inset 0 0.14rem 0 rgba(255, 255, 255, 0.3), 0 0 1.2rem 0.2rem rgba(155, 61, 255, 0.6);
+}
+
+.lg-spin.is-high {
+  background: linear-gradient(180deg, #ffd95a, #e39a00);
+  box-shadow: 0 0.3rem 0 #9a5200, inset 0 0.14rem 0 rgba(255, 255, 255, 0.5), 0 0 1.8rem 0.4rem rgba(255, 210, 31, 0.75);
+  animation: lg-spin-pop 0.5s var(--ease-spring);
+}
+
+.lg-spin__window {
+  position: relative;
+  flex: none;
+  width: var(--face);
+  height: var(--face);
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #ffffff, #e9e3fb 70%);
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25), inset 0 0.25rem 0.4rem rgba(27, 20, 64, 0.35);
+}
+
+/* Depth: faces darken toward the top and bottom of the window as they turn past. */
+.lg-spin__window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(27, 20, 64, 0.3), transparent 30%, transparent 70%, rgba(27, 20, 64, 0.3));
+  pointer-events: none;
+}
+
+.lg-spin__strip {
+  will-change: transform;
+}
+
+.lg-spin__face {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: var(--face);
+}
+
+.lg-face-art {
+  width: 62%;
+  height: 62%;
+  margin-bottom: 18%;
+  filter: drop-shadow(0 0.1rem 0.08rem rgba(27, 20, 64, 0.3));
+}
+
+/* The multiplier printed on each face, so a face is its own result. */
+.lg-spin__tag {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 0.32rem;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: calc(var(--face) * 0.2);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.lg-spin__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 4.6rem;
+}
+
+.lg-spin__feat {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-top);
+  white-space: nowrap;
+}
+
+.lg-spin__result {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--lg-ink-3);
+  text-shadow: var(--lg-drop);
+}
+
+.lg-spin__result.is-on {
+  color: #fff;
+  animation: lg-pop-in 0.4s var(--ease-spring) both;
+}
+
+.lg-spin.is-high .lg-spin__feat {
+  color: #6b3900;
+}
+
+.lg-spin.is-high .lg-spin__result {
+  -webkit-text-stroke: 0.05em #9a5200;
+  paint-order: stroke fill;
+}
+
+@keyframes lg-spin-pop {
+  40% {
+    transform: scale(1.08);
+  }
+}

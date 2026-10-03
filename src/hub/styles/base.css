@@ -1,0 +1,82 @@
+/* Page-level reset: the hub behaves like an app, not a document. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Every size in the hub is in rem, so this one rule scales the whole UI from phone to TV. */
+  font-size: clamp(14px, calc(8px + 1.15vmin), 19px);
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg-1);
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+input[type='text'] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+}
+
+.scroll-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.scroll-y::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+
+/* Headline type: chunky with a dark drop so it reads over any background. */
+.headline {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0.18rem 0 rgba(15, 8, 45, 0.55);
+}

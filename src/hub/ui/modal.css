@@ -1,0 +1,155 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  /* Flex (not grid) so the panel's max-height: 100% is measured against the screen, not its content. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--safe-top) + var(--topbar-h) + 1.3rem) calc(var(--safe-right) + 0.75rem)
+    calc(var(--safe-bottom) + 0.75rem) calc(var(--safe-left) + 0.75rem);
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(20, 10, 60, 0.6), rgba(5, 2, 20, 0.85));
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fade-in 0.25s ease-out both;
+}
+
+.modal__panel {
+  --ribbon: var(--blue);
+  --ribbon-edge: var(--blue-edge);
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, #43339a 0%, #2c2170 45%, #241a5e 100%);
+  border: 0.22rem solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0.5rem 0 rgba(10, 5, 35, 0.6), 0 1.5rem 3rem rgba(0, 0, 0, 0.55), inset 0 0.18rem 0 rgba(255, 255, 255, 0.18);
+  animation: pop-in 0.42s var(--ease-spring) both;
+}
+
+.modal__panel--s {
+  max-width: 22rem;
+}
+
+.modal__panel--m {
+  max-width: 30rem;
+}
+
+.modal__panel--l {
+  max-width: 42rem;
+}
+
+.modal--gold {
+  --ribbon: var(--gold);
+  --ribbon-edge: var(--gold-edge);
+}
+
+.modal--purple {
+  --ribbon: var(--purple);
+  --ribbon-edge: var(--purple-edge);
+}
+
+.modal--pink {
+  --ribbon: var(--pink);
+  --ribbon-edge: var(--pink-edge);
+}
+
+.modal--green {
+  --ribbon: var(--green);
+  --ribbon-edge: var(--green-edge);
+}
+
+/* Title banner riding over the panel's top edge, with folded ends. */
+.modal__ribbon {
+  position: absolute;
+  top: -1.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 5rem);
+  padding: 0.35rem 1.6rem 0.45rem;
+  border-radius: 0.8rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 55%), var(--ribbon);
+  box-shadow: 0 0.3rem 0 var(--ribbon-edge), 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+.modal__ribbon::before,
+.modal__ribbon::after {
+  content: '';
+  position: absolute;
+  top: 0.55rem;
+  width: 1.2rem;
+  height: 100%;
+  background: var(--ribbon-edge);
+  z-index: -1;
+}
+
+.modal__ribbon::before {
+  left: -0.8rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 40% 50%);
+}
+
+.modal__ribbon::after {
+  right: -0.8rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  clip-path: polygon(0 0, 100% 0, 60% 50%, 100% 100%, 0 100%);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 1.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal--gold .modal__title {
+  color: #6b3900;
+  text-shadow: 0 0.1rem 0 rgba(255, 245, 200, 0.6);
+}
+
+.modal__close {
+  position: absolute;
+  top: -0.7rem;
+  right: -0.5rem;
+  z-index: 3;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border: 0.18rem solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ff8a95, var(--red) 60%);
+  box-shadow: 0 0.22rem 0 var(--red-edge), 0 0.4rem 0.8rem rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 1.2rem;
+  transition: transform 0.08s;
+}
+
+.modal__close:active {
+  transform: translateY(0.18rem);
+  box-shadow: 0 0.04rem 0 var(--red-edge);
+}
+
+.modal__body {
+  padding: 2rem 1.25rem 1.25rem;
+  border-radius: inherit;
+}
+
+@media (max-height: 500px) {
+  .modal__panel--s {
+    max-width: 34rem;
+  }
+
+  .modal__body {
+    padding: 1.6rem 1rem 0.9rem;
+  }
+}

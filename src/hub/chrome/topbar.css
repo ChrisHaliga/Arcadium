@@ -1,0 +1,226 @@
+.topbar {
+  position: relative;
+  /* Above dialogs and celebrations, so the wallet and XP bar are seen filling up. */
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: calc(var(--safe-top) + 0.55rem) calc(var(--safe-right) + var(--gutter)) 0.4rem
+    calc(var(--safe-left) + var(--gutter));
+  animation: rise-in 0.5s var(--ease-out) both;
+}
+
+.topbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 0;
+  max-width: 22rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.level-ring {
+  position: relative;
+  /* Above the name plate, whose left end tucks underneath. */
+  z-index: 1;
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.level-ring__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.level-ring__track {
+  fill: #120b33;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 3.6;
+}
+
+.level-ring__fill {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3.6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s var(--ease-out);
+  filter: drop-shadow(0 0 2px rgba(255, 197, 49, 0.8));
+}
+
+.level-ring__avatar {
+  width: 2.45rem;
+}
+
+.level-ring__level {
+  position: absolute;
+  right: -0.35rem;
+  bottom: -0.25rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.55rem;
+  border: 0.13rem solid #fff;
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.14rem 0 var(--gold-edge);
+  color: #6b3900;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  animation: pop-in 0.5s var(--ease-spring) both;
+}
+
+/*
+ * Name and XP bar sit on a dark plate, like the coin pill, so they read over the bright
+ * attract map behind Home. Its left end tucks under the level ring.
+ */
+.topbar__who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  min-width: 0;
+  flex: 1;
+  max-width: 16rem;
+  margin-left: -1.6rem;
+  padding: 0.32rem 0.75rem 0.42rem 1.85rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(180deg, #160f3b, #241a5a);
+  box-shadow: inset 0 0.15rem 0.3rem rgba(0, 0, 0, 0.5), 0 0.1rem 0 rgba(255, 255, 255, 0.12);
+}
+
+.topbar__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0.12rem 0 rgba(10, 5, 40, 0.6);
+}
+
+.topbar__xp {
+  height: 1rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.topbar__xp .progress__label {
+  font-size: 0.66rem;
+}
+
+/* --- Coin pill --- */
+.coin-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: none;
+  height: 2.4rem;
+  margin-left: auto;
+  padding: 0 0.35rem 0 0;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #160f3b, #241a5a);
+  box-shadow: inset 0 0.15rem 0.3rem rgba(0, 0, 0, 0.5), 0 0.1rem 0 rgba(255, 255, 255, 0.12);
+}
+
+.coin-pill__icon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0 0.1rem 0 -0.35rem;
+  font-size: 1.75rem;
+}
+
+.coin-pill__icon .coin-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.coin-pill__value {
+  min-width: 3.2rem;
+  padding-right: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #ffe27a;
+  text-shadow: 0 0.12rem 0 rgba(0, 0, 0, 0.5);
+  text-align: right;
+}
+
+/* The landing flight copies the pill's coin, so size the sprite's glyph the same way. */
+.coin-sprite {
+  display: grid;
+  place-items: center;
+  font-size: 1.75rem;
+  pointer-events: none;
+}
+
+.coin-sprite .coin-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.topbar__gear {
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--slate-top), var(--slate) 60%);
+  box-shadow: 0 0.22rem 0 var(--slate-edge), inset 0 0.12rem 0 rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 1.45rem;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+@media (hover: hover) {
+  .topbar__gear:hover {
+    transform: rotate(45deg);
+  }
+}
+
+.topbar__gear:active {
+  transform: translateY(0.15rem) rotate(45deg);
+}
+
+@media (max-height: 500px) {
+  .topbar {
+    padding-top: calc(var(--safe-top) + 0.35rem);
+    padding-bottom: 0.2rem;
+  }
+
+  .level-ring {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .level-ring__avatar {
+    width: 2.1rem;
+  }
+
+  /* No taller than the smaller ring, so the bar keeps its --topbar-h. */
+  .topbar__who {
+    gap: 0.15rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .topbar__xp .progress__label {
+    font-size: 0.6rem;
+  }
+}

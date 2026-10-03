@@ -1,0 +1,279 @@
+.daily {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.daily__streak {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.daily__flame {
+  position: relative;
+  flex: none;
+  width: 3.2rem;
+  height: 3.2rem;
+  display: grid;
+  place-items: center;
+  color: #ff8a1f;
+  font-size: 3.2rem;
+  filter: drop-shadow(0 0 0.5rem rgba(255, 138, 31, 0.6));
+  animation: float-y 2.4s ease-in-out infinite;
+}
+
+.daily__flame > span {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0.1rem 0 rgba(120, 30, 0, 0.8);
+}
+
+.daily__streak-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+
+.daily__streak-text strong {
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.daily__notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  animation: pop-in 0.4s var(--ease-spring) both;
+}
+
+.daily__notice--saved {
+  background: rgba(63, 169, 255, 0.2);
+  color: #bfe6ff;
+}
+
+.daily__notice--lost {
+  background: rgba(255, 77, 94, 0.18);
+  color: #ffc2c8;
+}
+
+.daily__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.day-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem;
+  min-height: 6.4rem;
+  padding: 0.45rem 0.25rem 0.5rem;
+  border: 0.18rem solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #4a3aa3, #2f2479);
+  box-shadow: 0 0.25rem 0 rgba(8, 4, 30, 0.55), inset 0 0.12rem 0 rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font: inherit;
+}
+
+.day-tile--big {
+  grid-column: span 2;
+  background: linear-gradient(180deg, #7b4bdc, #4a24a8);
+}
+
+.day-tile__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.day-tile__prize {
+  display: grid;
+  place-items: center;
+  flex: 1;
+}
+
+.day-tile__coins {
+  position: relative;
+  display: flex;
+  font-size: 1.6rem;
+}
+
+.day-tile__coins .coin-icon + .coin-icon {
+  margin-left: -0.65em;
+}
+
+.day-tile__coins--3 .coin-icon:nth-child(2) {
+  transform: translateY(-0.3em);
+}
+
+.day-tile__chest {
+  font-size: 0.95rem;
+}
+
+.day-tile__amount {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffe27a;
+  text-shadow: 0 0.1rem 0 rgba(0, 0, 0, 0.45);
+}
+
+.day-tile--big .day-tile__amount {
+  color: #fff;
+}
+
+/* Claimed: the prize fades back and a stamp-like check sits on top at full strength. */
+.day-tile.is-claimed {
+  background: linear-gradient(180deg, #33287a, #251c60);
+}
+
+.day-tile.is-claimed > :not(.day-tile__check) {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+}
+
+.day-tile__check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: -1.2rem 0 0 -1.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--green-top), var(--green) 60%);
+  box-shadow: 0 0.2rem 0 var(--green-edge), 0 0.3rem 0.6rem rgba(0, 0, 0, 0.4);
+  border: 0.14rem solid #fff;
+  color: #fff;
+  font-size: 1.4rem;
+  animation: pop-in 0.45s var(--ease-spring) both;
+}
+
+.day-tile.is-today {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #ffd85a, #ff9f1f);
+  box-shadow: 0 0.25rem 0 var(--gold-edge), 0 0 1.2rem rgba(255, 197, 49, 0.6);
+  cursor: pointer;
+  animation: breathe 1.3s ease-in-out infinite;
+}
+
+.day-tile.is-today .day-tile__label {
+  color: #7a3f00;
+}
+
+.day-tile.is-today .day-tile__amount {
+  color: #fff;
+  text-shadow: 0 0.1rem 0 rgba(140, 70, 0, 0.8);
+}
+
+.day-tile.is-today .day-tile__prize {
+  animation: float-y 1.2s ease-in-out infinite;
+}
+
+.day-tile.is-next {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-style: dashed;
+}
+
+.daily__cta {
+  display: flex;
+  justify-content: center;
+  min-height: 3.6rem;
+  align-items: center;
+}
+
+.daily__cta .countdown {
+  font-size: 1rem;
+  padding: 0.5em 1em;
+}
+
+.daily__freeze {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 1rem;
+  background: rgba(8, 4, 30, 0.35);
+}
+
+.daily__freeze-icons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.daily__freeze-slot {
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 1.15rem;
+}
+
+.daily__freeze-slot.is-full {
+  background: linear-gradient(180deg, #bfefff, #3fa9ff);
+  color: #fff;
+  box-shadow: 0 0 0.6rem rgba(63, 169, 255, 0.6);
+}
+
+.daily__freeze-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+
+.daily__freeze-text strong {
+  font-size: 0.92rem;
+  color: #fff;
+}
+
+.daily__freeze .btn {
+  margin-bottom: 0.24rem;
+}
+
+@media (max-height: 500px) {
+  /* Short landscape screens lay the week out in one row; widen the panel so the tiles aren't slivers. */
+  .modal__panel.daily-panel {
+    max-width: 40rem;
+  }
+
+  .daily__grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .day-tile {
+    min-height: 5.2rem;
+  }
+
+  .day-tile__coins {
+    font-size: 1.3rem;
+  }
+
+  .daily__streak-text span {
+    display: none;
+  }
+}

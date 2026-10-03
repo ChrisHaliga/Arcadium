@@ -1,0 +1,47 @@
+.hub {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-1);
+}
+
+/* No z-index here: the top bar must be able to rise above overlays (see topbar.css). */
+.hub__chrome {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hub__main {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+}
+
+.screen--from-right {
+  animation: screen-from-right 0.38s var(--ease-out) both;
+}
+
+.screen--from-left {
+  animation: screen-from-left 0.38s var(--ease-out) both;
+}
+
+@keyframes screen-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem) scale(0.98);
+  }
+}
+
+@keyframes screen-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem) scale(0.98);
+  }
+}

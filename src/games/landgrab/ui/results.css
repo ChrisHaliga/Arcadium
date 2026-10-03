@@ -1,0 +1,579 @@
+/*
+ * The results card fits the screen at every size with Play Again in view: stacked on
+ * narrow screens, where the summary scrolls if it must; side by side on wide ones; and
+ * condensed step by step on short screens (landscape phones).
+ */
+.lg-results {
+  background: radial-gradient(ellipse at center, rgba(20, 10, 60, 0.55), rgba(5, 2, 20, 0.82));
+  animation: lg-fade-in 0.3s ease-out both;
+}
+
+.lg-results__panel {
+  max-width: 27rem;
+  align-items: stretch;
+  gap: 0.6rem;
+  padding: 1.9rem 1rem 1rem;
+}
+
+.lg-results__main,
+.lg-results__side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+/* Room around the rows for the total's bump, which the scroll box would otherwise clip. */
+.lg-results__main {
+  flex: 0 1 auto;
+  min-height: 0;
+  margin: -0.3rem -0.6rem;
+  padding: 0.3rem 0.6rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.lg-results__main::-webkit-scrollbar {
+  display: none;
+}
+
+.lg-results__side {
+  flex: none;
+}
+
+@media (min-aspect-ratio: 1/1) and (min-width: 600px) {
+  .lg-results__panel {
+    flex-direction: row;
+    max-width: 50rem;
+    gap: 1.3rem;
+    padding: 2rem 1.3rem 1.1rem;
+  }
+
+  .lg-results__main {
+    flex: 1.1 1 0;
+  }
+
+  .lg-results__side {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+}
+
+.lg-results__detail {
+  margin: 0;
+  color: var(--lg-ink-2);
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* ---------- Quick stats ---------- */
+
+.lg-results__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.lg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4rem 0.2rem 0.35rem;
+  border-radius: 0.9rem;
+  background: rgba(10, 5, 35, 0.4);
+  line-height: 1.05;
+}
+
+.lg-stat__icon {
+  color: var(--lg-ink-3);
+  font-size: 0.95rem;
+}
+
+.lg-stat__value {
+  margin-top: 0.15rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lg-stat__label {
+  font-size: 0.68rem;
+  color: var(--lg-ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lg-results__near {
+  margin: 0;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 79, 154, 0.35), rgba(255, 79, 154, 0.2));
+  border: 0.12rem solid rgba(255, 159, 203, 0.5);
+  color: #ffd6e8;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  animation: lg-pop-in 0.45s 0.35s var(--ease-spring) both;
+}
+
+/* ---------- Earnings, counting up line by line ---------- */
+
+.lg-earn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lg-earn__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 0.75rem;
+  background: rgba(10, 5, 35, 0.35);
+  font-size: 0.98rem;
+  opacity: 0;
+  transform: translateX(-0.8rem);
+  transition: opacity 0.25s, transform 0.35s var(--ease-spring);
+}
+
+.lg-earn__row.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.lg-earn__icon {
+  color: var(--lg-ink-3);
+}
+
+.lg-earn__label {
+  flex: 1;
+}
+
+.lg-earn__label small {
+  color: var(--lg-ink-3);
+  font-size: 0.8em;
+}
+
+.lg-earn__coins {
+  color: var(--lg-coin);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lg-earn__row.is-cost .lg-earn__coins {
+  color: #ff9cb0;
+}
+
+.lg-earn__empty {
+  padding: 0.4rem;
+  color: var(--lg-ink-3);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Pinned to the bottom of the summary when it has to scroll (small phones), so the total stays in view. */
+.lg-total {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 197, 49, 0.28), rgba(255, 197, 49, 0.12)), #2b2070;
+  border: 0.14rem solid rgba(255, 210, 31, 0.5);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.25s, transform 0.4s var(--ease-spring);
+}
+
+.lg-total.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.lg-total.is-multiplied {
+  animation: lg-total-boom 0.5s var(--ease-spring);
+}
+
+.lg-total__label {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lg-total__mult {
+  padding: 0.05rem 0.5rem;
+  border-radius: 0.6rem;
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.16rem 0 var(--gold-edge);
+  color: #6b3900;
+  font-weight: 700;
+  animation: lg-pop-in 0.4s var(--ease-spring) both;
+}
+
+.lg-total__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff3c4;
+  text-shadow: var(--lg-drop);
+}
+
+/* ---------- Bonus spins ---------- */
+
+.lg-spins {
+  /* The bonus spin's window, and the space held for it before the first spin. */
+  --face: 3.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.55rem 0.5rem 0.6rem;
+  border-radius: 1.1rem;
+  background: rgba(10, 5, 35, 0.4);
+}
+
+.lg-spins__title {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-top);
+}
+
+.lg-spins__title small {
+  color: var(--lg-ink-3);
+  font-weight: 600;
+}
+
+.lg-spins__waiting {
+  display: grid;
+  place-items: center;
+  height: calc(var(--face) + 0.8rem);
+  color: var(--lg-ink-3);
+}
+
+.lg-spins__chips {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.lg-chip {
+  min-width: 2.7rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--lg-ink-3);
+  font-weight: 700;
+  text-align: center;
+  transition: background 0.25s, color 0.25s, transform 0.3s var(--ease-spring);
+}
+
+.lg-chip.is-on {
+  background: rgba(143, 91, 255, 0.45);
+  color: #fff;
+  animation: lg-pop-in 0.35s var(--ease-spring);
+}
+
+.lg-chip.is-best {
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.16rem 0 var(--gold-edge), 0 0 0.9rem rgba(255, 210, 31, 0.6);
+  color: #6b3900;
+  transform: scale(1.12);
+}
+
+.lg-spins__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  color: var(--lg-ink-3);
+  font-size: 0.88rem;
+}
+
+/* ---------- XP ---------- */
+
+.lg-xp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.lg-xp__level {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--gold-top), var(--gold) 60%);
+  box-shadow: 0 0.18rem 0 var(--gold-edge);
+  color: #6b3900;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 0.85;
+  animation: lg-pop-in 0.4s var(--ease-spring);
+}
+
+.lg-xp__level small {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+}
+
+.lg-xp__track {
+  position: relative;
+  flex: 1;
+  height: 1.3rem;
+  border-radius: 999px;
+  background: rgba(8, 4, 30, 0.6);
+  box-shadow: inset 0 0.15rem 0.2rem rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.lg-xp__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  min-width: 0.7rem;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #9ff3ff, #1fb4ff 60%);
+  box-shadow: inset 0 -0.12rem 0 rgba(0, 0, 0, 0.15), inset 0 0.12rem 0 rgba(255, 255, 255, 0.45);
+  transition: width 0.8s var(--ease-out);
+}
+
+.lg-xp.is-level-up .lg-xp__fill {
+  background: linear-gradient(180deg, #ffe680, #ffb21f 60%);
+}
+
+.lg-xp__label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-shadow: 0 0.08rem 0 rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Actions ---------- */
+
+.lg-results__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+/* A step down from the kit's xl, which is sized for the hub's home screen, so the summary keeps its room. */
+.lg-play-again {
+  --depth: 0.55rem;
+  --radius: 1.5rem;
+  --pad-y: 0.9rem;
+  --pad-x: 2.2rem;
+  width: 100%;
+  font-size: 1.9rem;
+}
+
+/* ---------- XP and the wallet the total flies into ---------- */
+
+.lg-results__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.lg-results__progress .lg-xp {
+  flex: 1;
+  min-width: 0;
+}
+
+.lg-wallet {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.85rem 0.22rem 0.28rem;
+  border-radius: 999px;
+  background: rgba(10, 5, 35, 0.55);
+  border: 0.14rem solid rgba(255, 204, 51, 0.55);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff3c4;
+}
+
+.lg-wallet .coin-icon {
+  width: 1.45em;
+  height: 1.45em;
+}
+
+.lg-flying-coin {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  font-size: 1.5rem;
+  pointer-events: none;
+  animation-name: lg-coin-fly;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.8, 0.6);
+  animation-fill-mode: both;
+}
+
+@keyframes lg-coin-fly {
+  0% {
+    transform: translate(var(--x0), var(--y0)) translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translate(var(--x0), calc(var(--y0) - 1.2rem)) translate(-50%, -50%) scale(1.15);
+  }
+  /* Lands on the chip's coin, then sinks into it, so the chip still shows one coin. */
+  88% {
+    transform: translate(var(--x1), var(--y1)) translate(-50%, -50%) scale(0.75);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x1), var(--y1)) translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes lg-total-boom {
+  0% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* ---------- Short screens: condense in two steps (stacked, portrait needs the room sooner) ---------- */
+
+@media (max-height: 620px), (max-aspect-ratio: 1/1) and (max-height: 760px) {
+  .lg-results__panel {
+    gap: 0.45rem;
+    padding-top: 1.7rem;
+  }
+
+  .lg-results__main,
+  .lg-results__side {
+    gap: 0.38rem;
+  }
+
+  .lg-stat {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.3rem;
+  }
+
+  .lg-stat__value {
+    margin-top: 0;
+    font-size: 1.05rem;
+  }
+
+  .lg-stat__label {
+    font-size: 0.6rem;
+  }
+
+  .lg-results__near {
+    padding: 0.15rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .lg-earn {
+    gap: 0.18rem;
+  }
+
+  .lg-earn__row {
+    padding: 0.16rem 0.65rem;
+    font-size: 0.88rem;
+  }
+
+  .lg-total {
+    padding: 0.28rem 0.75rem;
+  }
+
+  .lg-total__value {
+    font-size: 1.3rem;
+  }
+
+  .lg-spins {
+    --face: 2.9rem;
+    gap: 0.3rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .lg-play-again {
+    --pad-y: 0.65rem;
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-height: 440px) {
+  .lg-results__detail {
+    font-size: 0.88rem;
+  }
+
+  .lg-stat__icon {
+    display: none;
+  }
+
+  .lg-earn__row {
+    padding: 0.1rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .lg-total__label {
+    font-size: 0.9rem;
+  }
+
+  .lg-total__value {
+    font-size: 1.15rem;
+  }
+
+  .lg-spins__title {
+    font-size: 0.85rem;
+  }
+
+  .lg-spins {
+    --face: 2.5rem;
+  }
+
+  .lg-spin__result {
+    font-size: 1.5rem;
+  }
+
+  .lg-xp__level {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .lg-play-again {
+    --pad-y: 0.5rem;
+    --depth: 0.42rem;
+    font-size: 1.35rem;
+  }
+}

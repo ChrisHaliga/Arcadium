@@ -1,0 +1,28 @@
+/*
+ * The kit's tokens, shared by the hub and every game's UI: the faces of the chunky 3D
+ * buttons (top highlight, face, bottom edge), which also tint ribbons, badges and glows
+ * so everything matches the buttons, and the two motion curves.
+ */
+:root {
+  --gold-top: #ffe680;
+  --gold: #ffc531;
+  --gold-edge: #c47f00;
+  --green-top: #9bf59a;
+  --green: #3fd46b;
+  --green-edge: #1c8f43;
+  --blue-top: #8fd3ff;
+  --blue: #3c9dff;
+  --blue-edge: #1f5fc4;
+  --pink-top: #ff9fcb;
+  --pink: #ff4f9a;
+  --pink-edge: #b8195e;
+  --purple-top: #c9a3ff;
+  --purple: #8f5bff;
+  --purple-edge: #5a2bc0;
+  --slate-top: #6d61b0;
+  --slate: #4a3d91;
+  --slate-edge: #2c2265;
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

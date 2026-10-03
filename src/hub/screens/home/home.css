@@ -1,0 +1,474 @@
+.home {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'rail' 'stage' 'actions';
+  gap: 0.4rem;
+  padding: 0.2rem calc(var(--safe-right) + var(--gutter)) 0.4rem calc(var(--safe-left) + var(--gutter));
+}
+
+.home__rail {
+  grid-area: rail;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /*
+   * Rail buttons line up under the avatar; the drop keeps a button's red badge clear of the
+   * level chip hanging off the avatar, so the two counts don't read as one stack.
+   */
+  padding-top: 0.75rem;
+  position: relative;
+  z-index: 3;
+}
+
+.home__stage {
+  grid-area: stage;
+  position: relative;
+  /* Keeps the cards' z-indexes inside the stage, under the rail and the Play column. */
+  z-index: 1;
+  min-height: 0;
+}
+
+.home__actions {
+  grid-area: actions;
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  padding-top: 0.4rem;
+  animation: rise-in 0.55s 0.1s var(--ease-out) both;
+}
+
+.home__play {
+  min-width: min(17rem, 80vw);
+}
+
+.home__play-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.95;
+}
+
+.home__play-main {
+  font-size: 2.5rem;
+  letter-spacing: 0.06em;
+}
+
+.home__play-main--soon {
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  line-height: 2.7rem;
+}
+
+.home__play-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* --- Side rail buttons --- */
+.rail-btn {
+  --tone-top: var(--pink-top);
+  --tone: var(--pink);
+  --tone-edge: var(--pink-edge);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Clears the face's raised edge. */
+  gap: 0.45rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  animation: pop-in 0.5s 0.15s var(--ease-spring) both;
+}
+
+.rail-btn--gold {
+  --tone-top: var(--gold-top);
+  --tone: var(--gold);
+  --tone-edge: var(--gold-edge);
+}
+
+.rail-btn__face {
+  position: relative;
+  width: 3.3rem;
+  height: 3.3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1.1rem;
+  background: linear-gradient(180deg, var(--tone-top), var(--tone) 60%);
+  box-shadow: 0 0.3rem 0 var(--tone-edge), 0 0.5rem 1rem rgba(0, 0, 0, 0.35), inset 0 0.14rem 0 rgba(255, 255, 255, 0.5);
+  color: #fff;
+  transition: transform 0.08s;
+}
+
+.rail-btn--gold .rail-btn__face {
+  color: #8a4b00;
+}
+
+.rail-btn:active .rail-btn__face {
+  transform: translateY(0.3rem);
+  box-shadow: 0 0 0 var(--tone-edge), inset 0 0.14rem 0 rgba(255, 255, 255, 0.5);
+}
+
+.rail-btn__icon {
+  font-size: 1.9rem;
+  filter: drop-shadow(0 0.12rem 0 rgba(0, 0, 0, 0.2));
+}
+
+.rail-btn.is-waiting .rail-btn__icon {
+  animation: wiggle 1.6s ease-in-out infinite;
+}
+
+.rail-btn.is-waiting .rail-btn__face {
+  --glow: rgba(255, 255, 255, 0.45);
+  animation: glow-pulse 1.6s ease-in-out infinite;
+}
+
+/* A dark tag rather than bare text: the attract map behind Home is often near-white. */
+.rail-btn__label {
+  padding: 0.08rem 0.55rem 0.12rem;
+  border-radius: 999px;
+  background: rgba(22, 15, 59, 0.85);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- Carousel --- */
+.carousel {
+  --card-step: 0.8;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel__track {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
+  overflow-clip-margin: 2rem;
+  touch-action: pan-y;
+}
+
+.game-card {
+  --accent: #1fd6a0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(calc(100vw - 4.5rem), 21rem);
+  height: min(calc(100% - 1.6rem), 27rem);
+  padding: 0;
+  border: 0.28rem solid rgba(255, 255, 255, 0.85);
+  border-radius: 1.9rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.35)), var(--accent);
+  box-shadow: 0 0.55rem 0 rgba(8, 4, 30, 0.55), 0 1.2rem 2.4rem rgba(0, 0, 0, 0.45);
+  text-align: left;
+  transition: transform 0.5s var(--ease-spring), opacity 0.3s, filter 0.3s, box-shadow 0.3s;
+  filter: brightness(0.6) saturate(0.8);
+  cursor: pointer;
+}
+
+.game-card.is-selected {
+  filter: none;
+  box-shadow: 0 0.55rem 0 rgba(8, 4, 30, 0.55), 0 0 2.4rem color-mix(in srgb, var(--accent) 60%, transparent),
+    0 1.2rem 2.4rem rgba(0, 0, 0, 0.45);
+}
+
+.carousel__track.is-dragging .game-card {
+  transition: none;
+}
+
+.card-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.card-art__host {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-1);
+}
+
+.card-art__generic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--accent), #140d36 115%);
+}
+
+.card-art__glow {
+  position: absolute;
+  width: 90%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 65%);
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.card-art__glow--a {
+  left: -25%;
+  top: -10%;
+}
+
+.card-art__glow--b {
+  right: -30%;
+  top: 25%;
+  width: 70%;
+  animation-delay: -2.5s;
+}
+
+.card-art__initial {
+  position: relative;
+  margin-bottom: 25%;
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0.4rem 0 rgba(0, 0, 0, 0.25);
+}
+
+.game-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 5, 35, 0) 52%, rgba(10, 5, 35, 0.88) 88%);
+  pointer-events: none;
+}
+
+.game-card__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1rem 1rem;
+}
+
+.game-card__title {
+  font-size: 2rem;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 0.2rem 0 rgba(0, 0, 0, 0.45);
+}
+
+.game-card__tagline {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.game-card__chip {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(10, 5, 35, 0.72);
+  color: #7affc0;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.game-card__chip .icon {
+  animation: spin 6s linear infinite;
+}
+
+.game-card.is-locked .game-card__tagline {
+  color: var(--ink-3);
+}
+
+.game-card__lock {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.4rem;
+  height: 4.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #5a4bb0, #2c2170);
+  border: 0.22rem solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0.35rem 0 rgba(8, 4, 30, 0.6), 0 0 1.6rem rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 2.1rem;
+}
+
+.game-card.is-selected .game-card__lock {
+  animation: float-y 2.2s ease-in-out infinite;
+}
+
+.game-card__soon {
+  position: absolute;
+  top: 1.55rem;
+  right: -2.9rem;
+  width: 10.5rem;
+  padding: 0.3rem 0;
+  transform: rotate(45deg);
+  background: linear-gradient(180deg, #ff8a95, var(--red));
+  box-shadow: 0 0.2rem 0 var(--red-edge);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-top: -1.4rem;
+  display: none;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(10, 5, 35, 0.6);
+  color: #fff;
+  font-size: 1.5rem;
+  transition: transform 0.15s, opacity 0.2s;
+}
+
+.carousel__arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel__arrow--prev {
+  left: 0.2rem;
+}
+
+.carousel__arrow--next {
+  right: 0.2rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .carousel__arrow {
+    display: grid;
+  }
+
+  .carousel__arrow:hover {
+    transform: scale(1.12);
+    background: rgba(10, 5, 35, 0.85);
+  }
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.carousel__dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: width 0.3s var(--ease-spring), background 0.3s;
+}
+
+.carousel__dot.is-active {
+  width: 1.6rem;
+  background: var(--gold);
+}
+
+/* Landscape screens (phones on their side, Steam Deck, desktop): rail | carousel | actions. */
+@media (min-aspect-ratio: 4/3) {
+  .home {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: 'rail stage actions';
+    gap: 1rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .home__rail {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.8rem;
+  }
+
+  .home__actions {
+    justify-content: center;
+    padding: 0 0.5rem 2rem 0;
+    gap: 0.8rem;
+  }
+
+  .carousel {
+    --card-step: 0.62;
+  }
+
+  .game-card {
+    width: auto;
+    aspect-ratio: 4 / 5;
+    height: min(calc(100% - 1.6rem), 30rem);
+  }
+}
+
+@media (min-aspect-ratio: 4/3) and (min-height: 950px) {
+  .game-card {
+    height: min(calc(100% - 1.6rem), 36rem);
+  }
+}
+
+/* Short landscape phones: squarer cards and a smaller Play button. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .home__actions {
+    padding-bottom: 0.5rem;
+  }
+
+  .home__play {
+    min-width: 12.5rem;
+  }
+
+  .home__play-main {
+    font-size: 2rem;
+  }
+
+  .home__play-main--soon {
+    font-size: 1.2rem;
+    line-height: 2.2rem;
+  }
+
+  .btn--xl.home__play {
+    --pad-y: 0.65rem;
+    --pad-x: 1.5rem;
+  }
+
+  .game-card {
+    aspect-ratio: 1;
+    height: calc(100% - 1rem);
+  }
+
+  .game-card__title {
+    font-size: 1.5rem;
+  }
+
+  .game-card__tagline {
+    font-size: 0.78rem;
+  }
+}

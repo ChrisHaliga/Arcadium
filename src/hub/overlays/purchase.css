@@ -1,0 +1,115 @@
+.purchase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.purchase__side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* Short landscape screens: the item sits beside its details instead of above them. */
+@media (max-height: 500px) {
+  .purchase {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .purchase .item-card--l {
+    flex: none;
+    width: 10.5rem;
+  }
+
+  .purchase__chest {
+    flex: none;
+    width: 8rem;
+  }
+}
+
+.purchase__note {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.purchase__actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* When the row is too narrow the primary button (last) wraps above Cancel, not below. */
+  flex-wrap: wrap-reverse;
+  gap: 0.7rem;
+}
+
+.purchase__won {
+  animation: pop-in 0.55s var(--ease-spring) both;
+}
+
+.purchase__chest {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 10rem;
+  height: 8rem;
+}
+
+.purchase__chest .chest {
+  position: relative;
+  font-size: 2rem;
+  animation: float-y 2.4s ease-in-out infinite;
+}
+
+.purchase__rays {
+  position: absolute;
+  inset: -2rem;
+  background: conic-gradient(from 0deg, transparent 0 8%, rgba(255, 220, 120, 0.25) 8% 13%, transparent 13% 33%,
+      rgba(255, 220, 120, 0.25) 33% 38%, transparent 38% 58%, rgba(255, 220, 120, 0.25) 58% 63%, transparent 63% 83%,
+      rgba(255, 220, 120, 0.25) 83% 88%, transparent 88%);
+  mask-image: radial-gradient(circle, #000 15%, transparent 65%);
+  -webkit-mask-image: radial-gradient(circle, #000 15%, transparent 65%);
+  animation: spin 12s linear infinite;
+}
+
+.odds {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.odds__row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.7rem;
+  background: rgba(8, 4, 30, 0.35);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.odds__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 0.25rem;
+  background: var(--r);
+  box-shadow: 0 0 0.5rem var(--r);
+}
+
+.odds__name {
+  flex: 1;
+  color: var(--r);
+}
+
+.odds__value {
+  font-variant-numeric: tabular-nums;
+}

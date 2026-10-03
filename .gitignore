@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-server/
+dist-electron/
+desktop/node_modules/
+desktop/out/
+ios/
+android/
+test-results/
+playwright-report/
+*.log
+.DS_Store

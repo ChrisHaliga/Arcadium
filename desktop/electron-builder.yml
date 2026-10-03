@@ -1,0 +1,38 @@
+# Unpacked ("dir") builds: Steam distributes the folder itself, so no installers.
+# Output lands in desktop/out/<platform>-unpacked (mac: desktop/out/mac-universal).
+appId: com.arcadium.app
+productName: Arcadium
+copyright: Copyright © 2026 Arcadium
+
+directories:
+  output: out
+  # Icons go here: build/icon.png (1024x1024); electron-builder derives .ico/.icns from it.
+  buildResources: build
+
+files:
+  - package.json
+  - main.cjs
+  - preload.cjs
+  - app/**/*
+
+asar: true
+
+win:
+  target:
+    - target: dir
+      arch: [x64]
+
+mac:
+  category: public.app-category.games
+  target:
+    - target: dir
+      # One build for Intel and Apple Silicon Macs.
+      arch: [universal]
+
+linux:
+  category: Game
+  # Lower-case binary name, which is what the Steam launch option points at on Linux / Steam Deck.
+  executableName: arcadium
+  target:
+    - target: dir
+      arch: [x64]

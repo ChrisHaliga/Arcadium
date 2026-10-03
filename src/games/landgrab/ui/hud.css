@@ -1,0 +1,325 @@
+.lg-hud {
+  position: absolute;
+  inset: 0;
+}
+
+.lg-hud__left {
+  position: absolute;
+  top: calc(var(--lg-safe-top) + var(--lg-gap));
+  left: calc(var(--lg-safe-left) + var(--lg-gap));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  max-width: 55%;
+}
+
+.lg-hud__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lg-hud--idle .lg-combo,
+.lg-hud--idle .lg-pending {
+  visibility: hidden;
+}
+
+/* ---------- Pause button ---------- */
+
+.lg-pause {
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--slate-top), var(--slate) 60%);
+  box-shadow: 0 0.24rem 0 var(--slate-edge), 0 0.4rem 0.8rem rgba(6, 3, 24, 0.4), inset 0 0.12rem 0 rgba(255, 255, 255, 0.35);
+  font-size: 1.1rem;
+  pointer-events: auto;
+  transition: transform 0.08s var(--ease-out);
+}
+
+.lg-pause:active {
+  transform: translateY(0.2rem);
+}
+
+/* ---------- Your share of the map, on your own colour ---------- */
+
+.lg-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 6.4rem;
+  padding: 0.2rem 0.85rem 0.3rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 55%), var(--me);
+  box-shadow: 0 0.28rem 0 var(--me-edge), 0 0.5rem 1rem rgba(6, 3, 24, 0.35), inset 0 0.12rem 0 rgba(255, 255, 255, 0.45);
+  line-height: 1;
+  transition: background 0.3s;
+}
+
+.lg-score__value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0.14rem 0 var(--me-edge);
+}
+
+.lg-score__rank {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  opacity: 0.92;
+  text-shadow: 0 0.08rem 0 var(--me-edge);
+}
+
+/* ---------- This life's coins ---------- */
+
+.lg-coins {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.8rem 0.22rem 0.3rem;
+  border-radius: 999px;
+  background: rgba(15, 10, 40, 0.72);
+  border: 0.14rem solid rgba(255, 204, 51, 0.55);
+  box-shadow: 0 0.3rem 0.8rem rgba(6, 3, 24, 0.35);
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff3c4;
+  text-shadow: var(--lg-drop);
+}
+
+.lg-coins .coin-icon {
+  width: 1.45em;
+  height: 1.45em;
+}
+
+/* ---------- Combo meter, riding next to the coins it multiplies ---------- */
+
+.lg-combo {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 0.3rem;
+  padding: 0.2rem 0.7rem 0.45rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, var(--pink-top), var(--pink) 60%);
+  box-shadow: 0 0.22rem 0 var(--pink-edge), 0 0.4rem 0.9rem rgba(6, 3, 24, 0.35);
+  line-height: 1;
+  animation: lg-pop-in 0.35s var(--ease-spring) both;
+}
+
+.lg-combo__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lg-combo__value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-shadow: 0 0.1rem 0 var(--pink-edge);
+}
+
+.lg-combo__track {
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  bottom: 0.18rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: rgba(90, 0, 40, 0.45);
+  overflow: hidden;
+}
+
+.lg-combo__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #fff;
+  transition: width 0.1s linear;
+}
+
+/* ---------- Kill feed ---------- */
+
+.lg-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lg-feed__line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 100%;
+  padding: 0.25rem 0.65rem 0.25rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(15, 10, 40, 0.72);
+  font-size: 0.85rem;
+  /* Gone just before GameUi drops the line (FEED_MS in store.ts). */
+  animation: lg-feed-in 0.35s var(--ease-spring) both, lg-fade-out 0.4s 3.7s ease-in forwards;
+}
+
+.lg-feed__icon {
+  color: var(--pink);
+}
+
+.lg-feed__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lg-feed__coins {
+  color: var(--lg-coin);
+  font-weight: 700;
+}
+
+/* ---------- Leaderboard: Paper.io-style colour bars, longer for more land ---------- */
+
+.lg-board {
+  position: absolute;
+  top: calc(var(--lg-safe-top) + var(--lg-gap));
+  right: calc(var(--lg-safe-right) + var(--lg-gap));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.24rem;
+  width: clamp(9.4rem, 25vw, 13rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lg-board__row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: var(--fill);
+  min-width: max-content;
+  height: 1.55rem;
+  padding: 0 0.55rem 0.12rem 0.45rem;
+  border-radius: 0.6rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 60%), var(--row);
+  box-shadow: inset 0 -0.18rem 0 var(--row-edge), 0 0.2rem 0.5rem rgba(6, 3, 24, 0.3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-shadow: 0 0.09rem 0 var(--row-edge);
+  transition: width 0.45s var(--ease-out);
+}
+
+.lg-board__rank {
+  width: 0.9rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.lg-board__name {
+  flex: 1;
+  min-width: 0;
+  max-width: 7.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lg-board__pct {
+  font-variant-numeric: tabular-nums;
+}
+
+.lg-board__row--me {
+  box-shadow: inset 0 -0.18rem 0 var(--row-edge), 0 0 0 0.16rem #fff, 0 0.25rem 0.7rem rgba(6, 3, 24, 0.45);
+}
+
+/* ---------- Minimap ---------- */
+
+.lg-minimap {
+  position: absolute;
+  right: calc(var(--lg-safe-right) + var(--lg-gap));
+  bottom: calc(var(--lg-safe-bottom) + var(--lg-gap));
+  width: clamp(5.6rem, 17vmin, 8.6rem);
+  aspect-ratio: 1;
+  padding: 0.3rem;
+  border-radius: 1.1rem;
+  background: rgba(15, 10, 40, 0.6);
+  border: 0.14rem solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0.4rem 1rem rgba(6, 3, 24, 0.35);
+}
+
+.lg-minimap__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- What the open loop is worth, floating over the head ---------- */
+
+.lg-pending {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.18s;
+  will-change: transform;
+}
+
+.lg-pending.is-on {
+  opacity: 1;
+}
+
+.lg-pending__body {
+  position: absolute;
+  left: 0;
+  bottom: var(--lg-over-head);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.12rem 0.6rem 0.12rem 0.2rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff6cf, #ffd95a 70%);
+  box-shadow: 0 0.2rem 0 #c47f00, 0 0.35rem 0.8rem rgba(6, 3, 24, 0.35);
+  color: #6b3900;
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transform: translateX(-50%) scale(var(--pulse, 1));
+  transform-origin: 50% 100%;
+}
+
+@keyframes lg-feed-in {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem) scale(0.8);
+  }
+}
+
+@keyframes lg-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .lg-score__value {
+    font-size: 1.55rem;
+  }
+
+  .lg-board__row {
+    height: 1.4rem;
+    font-size: 0.72rem;
+  }
+}

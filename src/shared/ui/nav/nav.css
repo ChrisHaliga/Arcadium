@@ -1,0 +1,14 @@
+/*
+ * Focus rings only while the keyboard or a gamepad is in use (data-nav on <html>, set by
+ * installNav), never after a tap. Plain :focus because a gamepad moves focus from script,
+ * which :focus-visible does not always count as keyboard use.
+ */
+:focus {
+  outline: none;
+}
+
+:root[data-nav='keys'] :focus {
+  outline: 0.25rem solid #fff;
+  outline-offset: 0.3rem;
+  box-shadow: 0 0 0 0.55rem rgba(66, 227, 255, 0.45);
+}

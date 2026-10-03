@@ -1,0 +1,61 @@
+/* Design tokens for the hub. Components read these instead of hard-coding colours. */
+:root {
+  --font: 'Fredoka', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+
+  /* Night sky */
+  --bg-0: #0f0a28;
+  --bg-1: #1b1440;
+  --bg-2: #251b57;
+  --bg-3: #312470;
+  --bg-4: #3d2e88;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+
+  /* Text */
+  --ink: #ffffff;
+  --ink-2: #d6cffb;
+  --ink-3: #9d93d4;
+  --ink-dark: #2a1d5c;
+
+  /* The button faces (--gold, --green, --blue, --pink, --purple, --slate, each with -top and
+     -edge) and the motion curves come from the shared kit, shared/ui/kit/tokens.css. Red has no
+     button of its own. */
+  --red: #ff4d5e;
+  --red-edge: #b5162b;
+
+  /* Rarities */
+  --common: #a3b6cc;
+  --common-deep: #5d7088;
+  --rare: #3fa9ff;
+  --rare-deep: #1b5fb8;
+  --epic: #b45bff;
+  --epic-deep: #6a22c4;
+  --legendary: #ffc531;
+  --legendary-deep: #c47f00;
+
+  --coin: #ffcc33;
+  --xp: #42e3ff;
+
+  --radius-s: 0.75rem;
+  --radius-m: 1.15rem;
+  --radius-l: 1.6rem;
+  --radius-xl: 2rem;
+
+  --card-bg: linear-gradient(180deg, #3a2c85 0%, #2a1f66 100%);
+  --card-shadow: 0 0.35rem 0 rgba(10, 6, 30, 0.55), 0 0.8rem 1.6rem rgba(5, 2, 20, 0.45);
+  --card-gloss: inset 0 0.15rem 0 rgba(255, 255, 255, 0.18);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --gutter: 1rem;
+  /* Height of the top bar below the safe area; overlays leave this much room for it. */
+  --topbar-h: 4.1rem;
+}
+
+@media (max-height: 500px) {
+  :root {
+    --topbar-h: 3.5rem;
+  }
+}

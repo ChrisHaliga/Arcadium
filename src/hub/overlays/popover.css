@@ -1,0 +1,66 @@
+.popover-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+}
+
+.popover-layer__catch {
+  position: absolute;
+  inset: 0;
+}
+
+.popover {
+  --arrow: 50%;
+  position: fixed;
+  width: min(15rem, calc(100vw - 24px));
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(180deg, #4a3aa3, #2c2170);
+  border: 0.16rem solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0.3rem 0 rgba(8, 4, 30, 0.6), 0 1rem 2rem rgba(0, 0, 0, 0.5);
+  transform-origin: var(--arrow) 100%;
+  animation: pop-in 0.3s var(--ease-spring) both;
+}
+
+.popover.is-below {
+  transform-origin: var(--arrow) 0;
+}
+
+/* Arrow pointing at the anchor. */
+.popover::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--arrow) - 0.55rem);
+  bottom: -0.55rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #2c2170;
+  border-right: 0.16rem solid rgba(255, 255, 255, 0.18);
+  border-bottom: 0.16rem solid rgba(255, 255, 255, 0.18);
+  transform: rotate(45deg);
+}
+
+.popover.is-below::after {
+  top: -0.55rem;
+  bottom: auto;
+  background: #4a3aa3;
+  transform: rotate(225deg);
+}
+
+.popover__title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.popover__close {
+  align-self: center;
+  padding: 0.35rem 1rem;
+  border: 0;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.12);
+  font-weight: 700;
+  font-size: 0.85rem;
+}

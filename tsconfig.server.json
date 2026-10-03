@@ -1,0 +1,24 @@
+// The match server's program, checked without the DOM: the server runs the same rules,
+// rooms and host-side networking as the client, so a browser API in any of them would
+// compile for the app and only fail once deployed. server/ pulls in everything it imports;
+// core, ai, room and net/protocol are listed too because the architecture promises they
+// stay portable even where the server doesn't use them yet.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": ["node"],
+    // Unset rather than inherited: with a JSX import source every file implicitly loads
+    // preact's JSX types, which reference lib.dom and would quietly bring the DOM back.
+    "jsx": null,
+    "jsxImportSource": null
+  },
+  "include": [
+    "server",
+    "src/games/landgrab/core",
+    "src/games/landgrab/ai",
+    "src/games/landgrab/room",
+    "src/games/landgrab/net/protocol.ts"
+  ],
+  "exclude": ["**/*.test.ts"]
+}

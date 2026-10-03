@@ -1,0 +1,180 @@
+/* --- Badge --- */
+.badge {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  z-index: 2;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ff7a86, var(--red) 60%);
+  border: 0.14rem solid #fff;
+  box-shadow: 0 0.15rem 0 var(--red-edge), 0 0.2rem 0.5rem rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  animation: pop-in 0.4s var(--ease-spring) both, wiggle 2.8s 1s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --- Progress bar --- */
+.progress {
+  --fill-top: #8af7a6;
+  --fill: #2fcf62;
+  position: relative;
+  height: 1.15rem;
+  border-radius: 999px;
+  background: rgba(8, 4, 30, 0.55);
+  box-shadow: inset 0 0.15rem 0.2rem rgba(0, 0, 0, 0.45), 0 0.08rem 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progress--xp {
+  --fill-top: #9ff3ff;
+  --fill: #1fb4ff;
+}
+
+.progress--gold {
+  --fill-top: #ffe680;
+  --fill: #ffb21f;
+}
+
+.progress__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  min-width: 0.6rem;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--fill-top), var(--fill) 60%);
+  box-shadow: inset 0 -0.12rem 0 rgba(0, 0, 0, 0.15), inset 0 0.12rem 0 rgba(255, 255, 255, 0.45);
+  transition: width 0.6s var(--ease-out);
+}
+
+.progress--full .progress__fill {
+  background: linear-gradient(180deg, #ffe680, #ffb21f 60%);
+}
+
+.progress__label {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0.08rem 0 rgba(0, 0, 0, 0.55), 0 0 0.25rem rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+/* --- Countdown chip --- */
+.countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.25em 0.7em 0.25em 0.55em;
+  border-radius: 999px;
+  background: rgba(8, 4, 30, 0.45);
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* --- Switch --- */
+.switch {
+  position: relative;
+  width: 4.4rem;
+  height: 2.2rem;
+  flex: none;
+  border: 0;
+  padding: 0;
+  border-radius: 999px;
+  background: #1a1245;
+  box-shadow: inset 0 0.18rem 0.3rem rgba(0, 0, 0, 0.5);
+  transition: background 0.2s;
+}
+
+.switch--on {
+  background: var(--green);
+  box-shadow: inset 0 0.18rem 0.3rem rgba(0, 60, 20, 0.45);
+}
+
+.switch__knob {
+  position: absolute;
+  top: 0.22rem;
+  left: 0.22rem;
+  width: 1.76rem;
+  height: 1.76rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff, #dcd6f5);
+  box-shadow: 0 0.18rem 0 rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.switch--on .switch__knob {
+  transform: translateX(2.2rem);
+}
+
+.switch__text {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+.switch--on .switch__text {
+  right: auto;
+  left: 0.7rem;
+  color: #fff;
+}
+
+/* --- Slider --- */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2.2rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue) 0 var(--fill), #1a1245 var(--fill) 100%);
+  box-shadow: inset 0 0.15rem 0.25rem rgba(0, 0, 0, 0.45);
+}
+
+.slider::-moz-range-track {
+  height: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue) 0 var(--fill), #1a1245 var(--fill) 100%);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-top: -0.5rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff, #dcd6f5);
+  border: 0.2rem solid var(--blue);
+  box-shadow: 0 0.2rem 0 var(--blue-edge), 0 0.3rem 0.6rem rgba(0, 0, 0, 0.35);
+}
+
+.slider::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #fff;
+  border: 0.2rem solid var(--blue);
+}

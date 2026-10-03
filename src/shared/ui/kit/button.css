@@ -1,0 +1,205 @@
+/* The chunky 3D button (Button.tsx): a glossy face over a darker edge that sinks when pressed. */
+.btn {
+  --face-top: var(--blue-top);
+  --face: var(--blue);
+  --edge: var(--blue-edge);
+  --text: #fff;
+  --text-drop: rgba(10, 30, 90, 0.45);
+  --depth: 0.36rem;
+  --radius: 1rem;
+  --pad-y: 0.6rem;
+  --pad-x: 1.15rem;
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  padding: 0;
+  margin: 0 0 var(--depth);
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: transform 0.08s var(--ease-out), filter 0.15s;
+}
+
+/* The darker edge underneath; pressing slides the face down over it. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--edge);
+  transform: translateY(var(--depth));
+  box-shadow: 0 0.45rem 0.9rem rgba(6, 3, 24, 0.45);
+  transition: transform 0.08s var(--ease-out);
+}
+
+.btn__face {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  padding: var(--pad-y) var(--pad-x);
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--face-top) 0%, var(--face) 55%);
+  box-shadow: inset 0 0.14rem 0 rgba(255, 255, 255, 0.5), inset 0 -0.16rem 0 rgba(0, 0, 0, 0.12);
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0.11rem 0 var(--text-drop);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Gloss band across the top half. */
+.btn__face::after {
+  content: '';
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 0.16rem;
+  height: 42%;
+  border-radius: 0.9rem 0.9rem 0.5rem 0.5rem;
+  background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
+  pointer-events: none;
+}
+
+.btn__icon {
+  font-size: 1.15em;
+  flex: none;
+  filter: drop-shadow(0 0.1rem 0 var(--text-drop));
+}
+
+.btn__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+@media (hover: hover) {
+  .btn:enabled:not([aria-disabled='true']):hover {
+    filter: brightness(1.07) saturate(1.05);
+  }
+}
+
+.btn:enabled:not([aria-disabled='true']):active {
+  transform: translateY(var(--depth));
+}
+
+.btn:enabled:not([aria-disabled='true']):active::before {
+  transform: translateY(0);
+}
+
+/* Locked buttons (aria-disabled) look the same but keep focus. */
+.btn:is(:disabled, [aria-disabled='true']) {
+  --face-top: #6a5fa8;
+  --face: #4d4290;
+  --edge: #2e2668;
+  --text: rgba(255, 255, 255, 0.6);
+  cursor: default;
+  filter: saturate(0.7);
+}
+
+.btn--gold {
+  --face-top: var(--gold-top);
+  --face: var(--gold);
+  --edge: var(--gold-edge);
+  --text: #6b3900;
+  --text-drop: rgba(255, 245, 200, 0.6);
+}
+
+.btn--green {
+  --face-top: var(--green-top);
+  --face: var(--green);
+  --edge: var(--green-edge);
+  --text-drop: rgba(10, 80, 30, 0.5);
+}
+
+.btn--pink {
+  --face-top: var(--pink-top);
+  --face: var(--pink);
+  --edge: var(--pink-edge);
+  --text-drop: rgba(110, 10, 50, 0.45);
+}
+
+.btn--purple {
+  --face-top: var(--purple-top);
+  --face: var(--purple);
+  --edge: var(--purple-edge);
+  --text-drop: rgba(50, 10, 110, 0.45);
+}
+
+.btn--slate {
+  --face-top: var(--slate-top);
+  --face: var(--slate);
+  --edge: var(--slate-edge);
+  --text-drop: rgba(10, 5, 40, 0.5);
+}
+
+.btn--s {
+  --depth: 0.24rem;
+  --radius: 0.75rem;
+  --pad-y: 0.42rem;
+  --pad-x: 0.75rem;
+  font-size: 0.88rem;
+}
+
+.btn--l {
+  --depth: 0.45rem;
+  --radius: 1.25rem;
+  --pad-y: 0.8rem;
+  --pad-x: 1.6rem;
+  font-size: 1.35rem;
+}
+
+.btn--xl {
+  --depth: 0.6rem;
+  --radius: 1.6rem;
+  --pad-y: 0.95rem;
+  --pad-x: 2.4rem;
+  font-size: 2.2rem;
+}
+
+.btn--round {
+  --radius: 999px;
+  --pad-x: var(--pad-y);
+}
+
+.btn--round .btn__face {
+  aspect-ratio: 1;
+}
+
+.btn--pulse {
+  animation: breathe 1.5s ease-in-out infinite;
+}
+
+/* A soft glow in the button's own colour that swells with the breathing. */
+.btn--pulse::before {
+  animation: edge-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes edge-glow {
+  0%,
+  100% {
+    box-shadow: 0 0.45rem 0.9rem rgba(6, 3, 24, 0.45), 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0.45rem 0.9rem rgba(6, 3, 24, 0.45), 0 0 1.2rem 0.3rem var(--face-top);
+  }
+}
+
+.btn--pulse .btn__face::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: shine-sweep 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
